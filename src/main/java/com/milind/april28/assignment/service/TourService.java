@@ -28,8 +28,7 @@ public class TourService
 
 	public Tour add(Tour t)
 	{
-		repo.save(t);
-		return t;
+		return repo.save(t);
 	}
 
 	public Tour update(Tour tour) throws NoSuchElementException
@@ -40,7 +39,6 @@ public class TourService
 
 	public void delete(String id) throws NoSuchElementException
 	{
-		repo.findById(id).orElseThrow();
 		repo.deleteById(id);
 	}
 }
