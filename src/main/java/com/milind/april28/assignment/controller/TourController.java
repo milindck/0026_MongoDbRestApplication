@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.milind.april28.assignment.exception.RecordNotFoundException;
 import com.milind.april28.assignment.model.Tour;
 import com.milind.april28.assignment.service.TourService;
 
@@ -33,7 +34,11 @@ public class TourController
 	@GetMapping("/tours/{id}")
 	public ResponseEntity<Tour> getTour(@PathVariable String id)
 	{
-		return new ResponseEntity<Tour>(service.findTour(id).orElseThrow(), HttpStatus.OK);
+		return new ResponseEntity<Tour>(
+				service.findTour(id)
+						.orElseThrow(() -> new RecordNotFoundException("Tour id '" + id + "' does no exist")),
+				HttpStatus.OK
+		);
 	}
 
 	@PostMapping("/tours")

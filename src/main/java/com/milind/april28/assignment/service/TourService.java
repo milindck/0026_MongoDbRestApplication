@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.milind.april28.assignment.exception.RecordNotFoundException;
 import com.milind.april28.assignment.model.Tour;
 import com.milind.april28.assignment.repo.TourRepo;
 
@@ -31,14 +32,16 @@ public class TourService
 		return repo.save(t);
 	}
 
-	public Tour update(Tour tour) throws NoSuchElementException
+	public Tour update(Tour tour)
 	{
-		repo.findById(tour.getId()).orElseThrow();
+		repo.findById(tour.getId())
+				.orElseThrow(() -> new RecordNotFoundException("Tour id '" + tour.getId() + "' does no exist"));
 		return repo.save(tour);
 	}
 
-	public void delete(String id) throws NoSuchElementException
+	public void delete(String id)
 	{
+		repo.findById(id).orElseThrow(() -> new RecordNotFoundException("Tour id '" + id + "' does no exist"));
 		repo.deleteById(id);
 	}
 }
