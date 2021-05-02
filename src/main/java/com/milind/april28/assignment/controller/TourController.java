@@ -20,12 +20,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.milind.april28.assignment.model.Tour;
 import com.milind.april28.assignment.service.TourService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class TourController
 {
 	@Autowired
 	private TourService service;
 
+	@ApiOperation(value = "View a list of all available tours", consumes = "none", produces = "application/json")
 	@GetMapping("/tours")
 	public ResponseEntity<List<Tour>> getAllTours()
 	{
@@ -33,6 +36,7 @@ public class TourController
 		return new ResponseEntity<>(allTours, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get existing tour by id", consumes = "none", produces = "application/json")
 	@GetMapping("/tours/{id}")
 	public ResponseEntity<Tour> getTour(@PathVariable String id)
 	{
@@ -40,6 +44,7 @@ public class TourController
 		return new ResponseEntity<>(tour, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Add a new tour", consumes = "application/json", produces = "none")
 	@PostMapping("/tours")
 	public ResponseEntity<Tour> addTour(@Valid @RequestBody Tour tour)
 	{
@@ -49,6 +54,7 @@ public class TourController
 		return ResponseEntity.created(location).build();
 	}
 
+	@ApiOperation(value = "Update existing tour", consumes = "application/json", produces = "none")
 	@PutMapping("/tours/{id}")
 	public ResponseEntity<Tour> updateTour(@PathVariable String id, @Valid @RequestBody Tour tour)
 	{
@@ -58,6 +64,7 @@ public class TourController
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiOperation(value = "Delete existing tour", consumes = "none", produces = "none")
 	@DeleteMapping("/tours/{id}")
 	public ResponseEntity<Tour> deleteTour(@PathVariable String id)
 	{

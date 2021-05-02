@@ -1,6 +1,6 @@
 package com.milind.april28.assignment.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,13 +16,12 @@ import io.swagger.annotations.ApiModelProperty;
 public class Tour
 {
 	@Id
-	@ApiModelProperty(notes = "The database generated tour ID")
+	@ApiModelProperty(notes = "Tour ID")
 	private String id;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 500)
-	@ApiModelProperty(notes = "The tour blurb")
 	private String tourBlurb;
 
 	@NotBlank
@@ -57,11 +56,13 @@ public class Tour
 
 	private Float tourPrice;
 
-	private Set<String> tourTags;
+	@ApiModelProperty(notes = "List of Tour tags")
+	private List<String> tourTags;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 500)
+	@ApiModelProperty(notes = "The tour description")
 	private String tourDescription;
 
 	public Tour()
@@ -71,7 +72,7 @@ public class Tour
 
 	public Tour(
 			String tourBlurb, String tourName, String tourPackage, String tourBullets, String tourRegion,
-			String tourDifficulty, Integer tourLength, Float tourPrice, Set<String> tourTags, String tourDescription
+			String tourDifficulty, Integer tourLength, Float tourPrice, List<String> tourTags, String tourDescription
 	)
 	{
 		super();
@@ -177,12 +178,12 @@ public class Tour
 		this.tourPrice = tourPrice;
 	}
 
-	public Set<String> getTourTags()
+	public List<String> getTourTags()
 	{
 		return tourTags;
 	}
 
-	public void setTourTags(Set<String> tourTags)
+	public void setTourTags(List<String> tourTags)
 	{
 		this.tourTags = tourTags;
 	}
