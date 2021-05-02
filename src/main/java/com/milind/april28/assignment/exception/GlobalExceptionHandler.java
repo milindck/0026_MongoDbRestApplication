@@ -19,7 +19,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 {
-	private String BAD_REQUEST = "BAD_REQUEST";
+	private static final String THROWABLE = "UNKNOWN_ERROR";
+	private static final String BAD_REQUEST = "BAD_REQUEST";
+	private static final String DATA_EXISTS = "DATA_EXISTS";
 
 	@ExceptionHandler(RecordNotFoundException.class)
 	public final ResponseEntity<ErrorResponse> handleRecordNotFoundException(
@@ -30,6 +32,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 		details.add(ex.getLocalizedMessage());
 		ErrorResponse error = new ErrorResponse(BAD_REQUEST, details);
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(RecordFoundException.class)
+	public final ResponseEntity<ErrorResponse> handleRecordFoundException(
+			RecordFoundException ex, WebRequest request
+	)
+	{
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		ErrorResponse error = new ErrorResponse(DATA_EXISTS, details);
+		return new ResponseEntity<>(error, HttpStatus.FOUND);
+	}
+
+	@ExceptionHandler(Throwable.class)
+	public final ResponseEntity<ErrorResponse> handleRecordNotFoundException(
+			Throwable ex, WebRequest request
+	)
+	{
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		ex.printStackTrace();
+		ErrorResponse error = new ErrorResponse(THROWABLE, details);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 	// error handle for @Valid
