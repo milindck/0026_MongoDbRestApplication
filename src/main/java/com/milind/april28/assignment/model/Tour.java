@@ -9,9 +9,10 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.hateoas.RepresentationModel;
 
 @Document(collection = "tours")
-public class Tour
+public class Tour extends RepresentationModel<Tour>
 {
 	@Id
 	private String id;
