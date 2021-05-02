@@ -10,21 +10,26 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Document(collection = "tours")
 public class Tour
 {
 	@Id
+	@ApiModelProperty(notes = "The database generated tour ID")
 	private String id;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 500)
+	@ApiModelProperty(notes = "The tour blurb")
 	private String tourBlurb;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 225)
 	@Indexed
+	@ApiModelProperty(notes = "The tour name")
 	private String tourName;
 
 	@NotBlank

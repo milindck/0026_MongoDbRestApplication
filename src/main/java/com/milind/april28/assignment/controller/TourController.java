@@ -1,18 +1,12 @@
 package com.milind.april28.assignment.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,29 +27,17 @@ public class TourController
 	private TourService service;
 
 	@GetMapping("/tours")
-	public CollectionModel<EntityModel<Tour>> getAllTours()
+	public ResponseEntity<List<Tour>> getAllTours()
 	{
 		List<Tour> allTours = service.findAllTours();
-		List<EntityModel<Tour>> allTourEntityModel = new ArrayList<>();
-		allTours.forEach(t -> allTourEntityModel.add(tourLinks(t)));
-
-		CollectionModel<EntityModel<Tour>> collectionModel = CollectionModel.of(allTourEntityModel);
-		WebMvcLinkBuilder linktoself = linkTo(methodOn(TourController.class).getAllTours());
-		collectionModel.add(linktoself.withRel("all-tours"));
-
-		return collectionModel;
+		return new ResponseEntity<>(allTours, HttpStatus.OK);
 	}
 
 	@GetMapping("/tours/{id}")
-	public EntityModel<Tour> getTour(@PathVariable String id)
+	public ResponseEntity<Tour> getTour(@PathVariable String id)
 	{
 		Tour tour = service.findTour(id);
-		EntityModel<Tour> resource = tourLinks(tour);
-
-		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllTours());
-		resource.add(linkTo.withRel("all-tours"));
-
-		return resource;
+		return new ResponseEntity<>(tour, HttpStatus.OK);
 	}
 
 	@PostMapping("/tours")
@@ -82,21 +64,5 @@ public class TourController
 		service.delete(id);
 
 		return ResponseEntity.noContent().build();
-	}
-
-	private static EntityModel<Tour> tourLinks(Tour tour)
-	{
-		EntityModel<Tour> resource = EntityModel.of(tour);
-
-		WebMvcLinkBuilder linkToSelf = linkTo(methodOn(TourController.class).getTour(tour.getId()));
-		resource.add(linkToSelf.withRel("self"));
-
-		WebMvcLinkBuilder linkToDelete = linkTo(methodOn(TourController.class).deleteTour(tour.getId()));
-		resource.add(linkToDelete.withRel("delete-tour"));
-
-		WebMvcLinkBuilder linkToUpdate = linkTo(methodOn(TourController.class).updateTour(tour.getId(), tour));
-		resource.add(linkToUpdate.withRel("update-tour"));
-
-		return resource;
 	}
 }
