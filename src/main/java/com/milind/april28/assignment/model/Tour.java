@@ -14,50 +14,50 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Tour
 {
 	@Id
-	String id;
+	private String id;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 500)
-	String tourBlurb;
+	private String tourBlurb;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 225)
 	@Indexed
-	String tourName;
+	private String tourName;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 50)
-	String tourPackage;
+	private String tourPackage;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 100)
-	String tourBullets;
+	private String tourBullets;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 50)
-	String tourRegion;
+	private String tourRegion;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 20)
-	String tourDifficulty;
+	private String tourDifficulty;
 
 	@NotNull
-	Integer tourLength;
+	private Integer tourLength;
 
-	Float tourPrice;
+	private Float tourPrice;
 
-	Set<String> tourTags;
+	private Set<String> tourTags;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 5, max = 500)
-	String tourDescription;
+	private String tourDescription;
 
 	public Tour()
 	{
