@@ -65,6 +65,30 @@ public class Tour
 	}
 
 	public Tour(
+			String id, @NotBlank @NotNull @Size(min = 5, max = 500) String tourBlurb,
+			@NotBlank @NotNull @Size(min = 5, max = 225) String tourName,
+			@NotBlank @NotNull @Size(min = 5, max = 50) String tourPackage,
+			@NotBlank @NotNull @Size(min = 5, max = 100) String tourBullets,
+			@NotBlank @NotNull @Size(min = 5, max = 50) String tourRegion,
+			@NotBlank @NotNull @Size(min = 5, max = 20) String tourDifficulty, @NotNull Integer tourLength,
+			Float tourPrice, Set<String> tourTags, @NotBlank @NotNull @Size(min = 5, max = 500) String tourDescription
+	)
+	{
+		super();
+		this.id = id;
+		this.tourBlurb = tourBlurb;
+		this.tourName = tourName;
+		this.tourPackage = tourPackage;
+		this.tourBullets = tourBullets;
+		this.tourRegion = tourRegion;
+		this.tourDifficulty = tourDifficulty;
+		this.tourLength = tourLength;
+		this.tourPrice = tourPrice;
+		this.tourTags = tourTags;
+		this.tourDescription = tourDescription;
+	}
+
+	public Tour(
 			String tourBlurb, String tourName, String tourPackage, String tourBullets, String tourRegion,
 			String tourDifficulty, Integer tourLength, Float tourPrice, Set<String> tourTags, String tourDescription
 	)
